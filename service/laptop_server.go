@@ -14,12 +14,13 @@ import (
 // LaptopServer is the server that provides laptop services
 type LaptopServer struct {
 	laptopStore LaptopStore
+	pb.UnimplementedLaptopServiceServer
 }
 
 // NewLaptopServer returns a new LaptopServer
 // インターフェースを引数に
 func NewLaptopServer(laptopStore LaptopStore) *LaptopServer {
-	return &LaptopServer{laptopStore}
+	return &LaptopServer{laptopStore: laptopStore}
 }
 
 // CreateLaptop is a unary RPC to create a new laptop

@@ -13,6 +13,8 @@ import (
 type LaptopStore interface {
 	// Save saves the laptop to the store
 	Save(laptop *pb.Laptop) error
+	// Find finds a laptop by ID
+	Find(id string) (*pb.Laptop, error)
 }
 
 // InMemoryLaptopStore stores laptop in memory
@@ -49,6 +51,19 @@ func (store *InMemoryLaptopStore) Save(laptop *pb.Laptop) error {
 
 	store.data[other.Id] = other
 	return nil
+}
+
+// Find finds a laptop by ID
+func (store *InMemoryLaptopStore) Find(id string) (*pb.Laptop, error) {
+	store.mutex.RLock()
+	defer store.mutex.RUnlock()
+
+	laptop := store.data[id]
+	if laptop == nil {
+		return nil, nil
+	}
+
+	return deepCopy(laptop)
 }
 
 func deepCopy(laptop *pb.Laptop) (*pb.Laptop, error) {

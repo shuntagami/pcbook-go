@@ -20,6 +20,7 @@ type LaptopServer struct {
 	laptopStore LaptopStore
 	imageStore  ImageStore
 	ratingStore RatingStore
+
 	pb.UnimplementedLaptopServiceServer
 }
 

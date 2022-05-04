@@ -1,0 +1,14 @@
+version: v1
+plugins:
+  - remote: buf.build/protocolbuffers/plugins/go:v1.27.1-1
+    out: pb
+    opt: paths=source_relative
+  - remote: buf.build/grpc/plugins/go:v1.1.0-1
+    out: pb
+    opt:
+      - paths=source_relative
+      - require_unimplemented_servers=false
+  - name: openapiv2
+    out: swagger
+    strategy: all
+    opt: allow_merge=true,output_format=yaml

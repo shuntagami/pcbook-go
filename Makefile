@@ -1,13 +1,16 @@
 #!make
 
 gen:
-	protoc --proto_path=proto proto/*.proto --go_out=./pb --go-grpc_out=./pb
+	protoc --proto_path=proto proto/*.proto --go_out=./pb --go-grpc_out=./pb --grpc-gateway_out=./pb
 
 clean:
 	rm pb/*.go
 
 server1:
 	go run cmd/server/main.go -port 8080
+
+rest1:
+	go run cmd/server/main.go -port 8081 -type rest -endpoint 0.0.0.0:8080
 
 server2:
 	go run cmd/server/main.go -port 50051
